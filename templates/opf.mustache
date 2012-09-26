@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="{{doc_uuid}}">
   <metadata>
+    <meta content="cover-image" name="cover"/>
+
     <dc-metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
       <dc:title>{{title}}</dc:title>
       <dc:language>en-gb</dc:language>
-      <meta content="cover-image" name="cover"/>
       <dc:creator>{{author}}</dc:creator>
       <dc:publisher>{{publisher}}</dc:publisher>
       <dc:subject>{{subject}}</dc:subject>
@@ -21,7 +22,7 @@
   <manifest>
     <item href="contents.html" media-type="application/xhtml+xml" id="contents"/>
     <item href="nav-contents.ncx" media-type="application/x-dtbncx+xml" id="nav-contents"/>
-    <item href="{{cover}}" media-type="image/gif" id="cover-image"/>
+    <item href="{{cover}}" media-type="image/jpg" id="cover-image"/>
     <item href="{{masthead}}" media-type="image/gif" id="masthead"/>
     {{#manifest_items}}
     <item href="{{href}}" media-type="{{media}}" id="{{idref}}"/>

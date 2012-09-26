@@ -21,18 +21,29 @@ end
 
 
 module Kindlerb
-  VERSION = '0.0.8'
+  VERSION = '0.0.9'
+
+  # allows overriding the default mustaches with ones specified under the templates folder
+  def self.custom_or_default_template(target_dir, name)
+    custom = File.join(target_dir, "templates", "#{name}.mustache")
+    if File.exist?(custom)
+      puts "Using custom template for #{name}.mustache"
+      File.read(custom)
+    else
+      File.read(File.join(File.dirname(__FILE__), '..', "templates", "#{name}.mustache"))
+    end
+  end
 
   def self.run
 
     target_dir = Pathname.new(ARGV.first || '.')
 
-    opf_template = File.read(File.join(File.dirname(__FILE__), '..', "templates/opf.mustache"))
-    ncx_template = File.read(File.join(File.dirname(__FILE__), '..', "templates/ncx.mustache"))
-    contents_template = File.read(File.join(File.dirname(__FILE__), '..', "templates/contents.mustache"))
-    section_template = File.read(File.join(File.dirname(__FILE__), '..', "templates/section.mustache"))
-    masthead_gif = File.join(File.dirname(__FILE__), '..', "templates/masthead.gif")
-    cover_gif = File.join(File.dirname(__FILE__), '..', "templates/cover-image.gif")
+    opf_template = custom_or_default_template(target_dir, "opf")
+    ncx_template = custom_or_default_template(target_dir, "ncx")
+    contents_template = custom_or_default_template(target_dir, "contents")
+    section_template = custom_or_default_template(target_dir, "section")
+    # masthead_gif = File.join(File.dirname(__FILE__), '..', "templates/masthead.gif")
+    # cover_gif = File.join(File.dirname(__FILE__), '..', "templates/cover-image.gif")
 
     Dir.chdir target_dir do
       playorder = 1
