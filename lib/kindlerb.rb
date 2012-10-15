@@ -21,7 +21,7 @@ end
 
 
 module Kindlerb
-  VERSION = '0.0.9'
+  VERSION = '0.0.10'
 
   # allows overriding the default mustaches with ones specified under the templates folder
   def self.custom_or_default_template(target_dir, name)
@@ -34,10 +34,7 @@ module Kindlerb
     end
   end
 
-  def self.run
-
-    target_dir = Pathname.new(ARGV.first || '.')
-
+  def self.prepare_content(target_dir)
     opf_template = custom_or_default_template(target_dir, "opf")
     ncx_template = custom_or_default_template(target_dir, "ncx")
     contents_template = custom_or_default_template(target_dir, "contents")
@@ -58,7 +55,7 @@ module Kindlerb
         abort "Missing _document.yml. Your input file tree is not structured correctly. Please read the README."
       end
 
-      document = YAML::load_file("_document.yml")  
+      document = YAML::load_file("_document.yml")
 
       document[:spine_items] = []
       section_html_files = []
@@ -144,13 +141,26 @@ module Kindlerb
       # contents
       contents = Mustache.render contents_template, document
       File.open("contents.html", "w") {|f| f.puts contents}
-      puts "Wrote #{target_dir}/contents.html"
+      puts "Wrote #{target_dir}/contents.html"  
+    end
+  end
+
+  def self.generate_mobi(target_dir)
+    Dir.chdir target_dir do
+      document = YAML::load_file("_document.yml")
 
       outfile = document['mobi_outfile']
       puts "Writing #{outfile}"
       cmd = "kindlegen -verbose -c2 -o #{outfile} kindlerb.opf && echo 'Wrote MOBI to #{outfile}'"
       puts cmd
-      exec cmd
+      system cmd
     end
+  end
+
+  def self.run
+    target_dir = Pathname.new(ARGV.first || '.')
+
+    self.prepare_content(target_dir)
+    self.generate_mobi(target_dir)
   end
 end

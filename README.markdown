@@ -33,6 +33,14 @@ Run the program at the root of the file tree:
 
 The output will be a mobi document.
 
+You can also use the generator inside a Ruby script - you can use it two ways:
+
+    Kindlerb.run # will pack everything and generate a .mobi in the current directory
+
+    Kindlerb.prepare_content(path) # build all the files required by kindlegen (opf, ncx, etc).
+    # you can customize whatever you want here - for instance, override the 'sections.html' files, etc
+    Kindlerb.generate_mobi(path) # generate the .mobi file.
+
 The file tree input structure is 
 
     _document.yml
