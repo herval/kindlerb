@@ -1,3 +1,5 @@
+source 'http://rubygems.org'
 
-gem 'nokogiri'
-gem 'mustache'
+ruby '2.2.2'
+
+gemspec
