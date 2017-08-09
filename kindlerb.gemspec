@@ -1,10 +1,11 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-# require "kindlerb"
+
+VERSION = '0.0.10'
 
 Gem::Specification.new do |s|
   s.name        = "kindlerb"
-  s.version     = Kindlerb::VERSION
+  s.version     = VERSION
   s.platform    = Gem::Platform::RUBY
   s.required_ruby_version = '>= 1.9.0'
 

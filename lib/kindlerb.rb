@@ -21,8 +21,6 @@ end
 
 
 module Kindlerb
-  VERSION = '0.0.10'
-
   # allows overriding the default mustaches with ones specified under the templates folder
   def self.custom_or_default_template(target_dir, name)
     custom = File.join(target_dir, "templates", "#{name}.mustache")
